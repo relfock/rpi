@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdio.h>
 
 #include "rpi.h"
 
@@ -12,7 +13,10 @@ int main()
     daemon(0, 0);
 #endif
 
+    printf("Initializing Motor ...\n");
     motor_init(motor_pin);
+
+    printf("Initializing TCP Server ...\n");
     tcp_server();
 
     return 0;

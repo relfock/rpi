@@ -51,7 +51,9 @@ void tcp_server(void)
     uint8_t buff[1024];
     struct packet_s *pkt = (struct packet_s*)buff;
 
-    while(true) {
+    printf("Waiting for connection ...\n");
+
+    while(1) {
         client_socket = accept(server_sock, (struct sockaddr *) &client_addr, &client_len);
         if (client_socket < 0){
             perror("ERROR on accepting incoming connection.");

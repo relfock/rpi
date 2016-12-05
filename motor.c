@@ -3,6 +3,8 @@
 #include <unistd.h>
 #include <wiringPi.h>
 
+#include "rpi.h"
+
 int motor_init(int pin)
 {
     char * str;
@@ -14,6 +16,7 @@ int motor_init(int pin)
 
 int control_motor(int pin, enum dir direction)
 {
+    int pw;
     switch(direction) {
         case LEFT:
             pw = 2500;
