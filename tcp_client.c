@@ -49,8 +49,10 @@ int main(int argc, char **argv)
     serveraddr.sin_port = htons(portno);
 
     /* connect: create a connection with the server */
-    if (connect(sockfd, (const struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0) 
-        printf("ERROR connecting");
+    if (connect(sockfd, (const struct sockaddr *)&serveraddr, sizeof(serveraddr)) < 0) {
+        printf("ERROR connecting\n");
+        exit(1);
+    }
 
     /* get message line from the user */
     printf("Sending 0 1 0\n");
@@ -60,8 +62,10 @@ int main(int argc, char **argv)
     buf[2] = atoi(argv[3]);
 
     n = write(sockfd, buf, 3);
-    if (n < 0) 
-        printf("ERROR writing to socket");
+    if (n < 0)  {
+        printf("ERROR writing to socket\n");
+        exit(1);
+    }
 
     /* print the server's reply */
 #if 0
