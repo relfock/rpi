@@ -20,12 +20,15 @@ int control_motor(int pin, enum dir direction)
     switch(direction) {
         case LEFT:
             pw = 2500;
+            printf("Turn motor LEFT\n");
             break;
         case RIGHT:
+            printf("Turn motor RIGHT\n");
             pw = 500;
             break;
         default:
             // rotate to center
+            printf("Turn motor CENTER\n");
             pw = 1500;
             break;
     }

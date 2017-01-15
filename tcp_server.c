@@ -7,6 +7,8 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 
+#include "rpi.h"
+
 struct packet_s {
     uint8_t cmd;
     uint8_t len;
@@ -15,6 +17,7 @@ struct packet_s {
 
 static int server_sock = -1;
 static int port_number = 3333;
+extern int motor_pin;
 
 void tcp_server(void)
 {
@@ -60,11 +63,19 @@ void tcp_server(void)
             continue;
         }
 
-        printf("CONNECTED FROM %s:%d", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
+        printf("CONNECTED FROM %s:%d\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
         read(client_socket, pkt, sizeof(struct packet_s));
         read(client_socket, pkt->data, pkt->len);
 
-        printf("CMD[%d] LEN [%d] DATA0[%d]\n", pkt->cmd, pkt->len, pkt->data[0]);
+        switch(pkt->cmd) {
+            case 0:
+                control_motor(18, pkt->data[0]);
+                break;
+            default:
+                printf("UNKNOWN CMD[%d] LEN [%d] DATA0[%d]\n", pkt->cmd, pkt->len, pkt->data[0]);
+                break;
+        }
+
         close(client_socket);
     }
 }

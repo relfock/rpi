@@ -22,8 +22,8 @@ int main(int argc, char **argv)
     char buf[BUFSIZE];
 
     /* check command line arguments */
-    if (argc != 3) {
-        fprintf(stderr,"usage: %s <hostname> <port>\n", argv[0]);
+    if (argc != 4) {
+        fprintf(stderr,"usage: %s <hostname> <port> <value>\n", argv[0]);
         exit(0);
     }
     hostname = argv[1];
@@ -57,7 +57,7 @@ int main(int argc, char **argv)
 
     buf[0] = 0;
     buf[1] = 1;
-    buf[2] = 0;
+    buf[2] = atoi(argv[3]);
 
     n = write(sockfd, buf, 3);
     if (n < 0) 
