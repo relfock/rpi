@@ -8,6 +8,7 @@
 #include <netinet/in.h>
 
 #include "rpi.h"
+#include "i2c_devices.h"
 
 struct packet_s {
     uint8_t cmd;
@@ -51,6 +52,7 @@ void tcp_server(void)
     client_len = sizeof(client_addr);
 
 
+    int temp;
     uint8_t buff[1024];
     struct packet_s *pkt = (struct packet_s*)buff;
 
@@ -65,11 +67,17 @@ void tcp_server(void)
 
         printf("CONNECTED FROM %s:%d\n", inet_ntoa(client_addr.sin_addr), ntohs(client_addr.sin_port));
         read(client_socket, pkt, sizeof(struct packet_s));
-        read(client_socket, pkt->data, pkt->len);
+
+        if(pkt->len != 0)
+            read(client_socket, pkt->data, pkt->len);
 
         switch(pkt->cmd) {
             case 0:
                 control_motor(18, pkt->data[0]);
+                break;
+            case 1:
+                temp = read_temperature();
+                write(client_socket, temp, sizeof(temp));
                 break;
             default:
                 printf("UNKNOWN CMD[%d] LEN [%d] DATA0[%d]\n", pkt->cmd, pkt->len, pkt->data[0]);

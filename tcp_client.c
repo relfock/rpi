@@ -67,6 +67,25 @@ int main(int argc, char **argv)
         exit(1);
     }
 
+    int temp;
+
+    buf[0] = 1;
+    buf[1] = 0;
+
+    n = write(sockfd, buf, 2);
+    if (n < 0)  {
+        printf("ERROR writing to socket\n");
+        exit(1);
+    }
+
+    n = read(sockfd, temp, sizeof(temp));
+    if (n < 0)  {
+        printf("ERROR writing to socket\n");
+        exit(1);
+    }
+
+    printf("Temperature %d\n", temp);
+
     /* print the server's reply */
 #if 0
     bzero(buf, BUFSIZE);
