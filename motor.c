@@ -17,6 +17,7 @@ int motor_init(int pin)
 int control_motor(int pin, enum dir direction)
 {
     int pw;
+
     switch(direction) {
         case LEFT:
             pw = 2500;
@@ -32,7 +33,10 @@ int control_motor(int pin, enum dir direction)
             pw = 1500;
             break;
     }
+
     digitalWrite(pin, 1);
     usleep(pw);
     digitalWrite(pin, 0);
+
+    return 0;
 }

@@ -21,6 +21,7 @@ void open_i2c_devices()
 
 int read_temperature()
 {
+    int temp;
 	uint8_t data[2] = { 0 };
 
 	if(ioctl(i2c_fd, I2C_SLAVE, 0x48) < 0) {

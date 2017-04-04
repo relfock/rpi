@@ -77,7 +77,7 @@ void tcp_server(void)
                 break;
             case 1:
                 temp = read_temperature();
-                write(client_socket, temp, sizeof(temp));
+                write(client_socket, &temp, sizeof(temp));
                 break;
             default:
                 printf("UNKNOWN CMD[%d] LEN [%d] DATA0[%d]\n", pkt->cmd, pkt->len, pkt->data[0]);
